@@ -1,0 +1,19 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/lxx/Downloads/KhadasNpuDemo_v1/KhadasNpuDemo_v1/openCVLibrary440/src/main/AndroidManifest.xml:2:1-4:12
+INJECTED from /home/lxx/Downloads/KhadasNpuDemo_v1/KhadasNpuDemo_v1/openCVLibrary440/src/main/AndroidManifest.xml:2:1-4:12
+INJECTED from /home/lxx/Downloads/KhadasNpuDemo_v1/KhadasNpuDemo_v1/openCVLibrary440/src/main/AndroidManifest.xml:2:1-4:12
+	package
+		ADDED from /home/lxx/Downloads/KhadasNpuDemo_v1/KhadasNpuDemo_v1/openCVLibrary440/src/main/AndroidManifest.xml:3:7-27
+		INJECTED from /home/lxx/Downloads/KhadasNpuDemo_v1/KhadasNpuDemo_v1/openCVLibrary440/src/main/AndroidManifest.xml
+		INJECTED from /home/lxx/Downloads/KhadasNpuDemo_v1/KhadasNpuDemo_v1/openCVLibrary440/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/lxx/Downloads/KhadasNpuDemo_v1/KhadasNpuDemo_v1/openCVLibrary440/src/main/AndroidManifest.xml:2:11-69
+uses-sdk
+INJECTED from /home/lxx/Downloads/KhadasNpuDemo_v1/KhadasNpuDemo_v1/openCVLibrary440/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/lxx/Downloads/KhadasNpuDemo_v1/KhadasNpuDemo_v1/openCVLibrary440/src/main/AndroidManifest.xml
+INJECTED from /home/lxx/Downloads/KhadasNpuDemo_v1/KhadasNpuDemo_v1/openCVLibrary440/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/lxx/Downloads/KhadasNpuDemo_v1/KhadasNpuDemo_v1/openCVLibrary440/src/main/AndroidManifest.xml
+		ADDED from /home/lxx/Downloads/KhadasNpuDemo_v1/KhadasNpuDemo_v1/openCVLibrary440/src/main/AndroidManifest.xml
+		INJECTED from /home/lxx/Downloads/KhadasNpuDemo_v1/KhadasNpuDemo_v1/openCVLibrary440/src/main/AndroidManifest.xml

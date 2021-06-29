@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:textSize="36sp"
+            android:text="model select"/>
+
+        <Button
+            android:id="@+id/button_yolov3"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="yolov3 model" />
+        <Button
+            android:id="@+id/button_yolov2"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="yolov2 model" />
+        <Button
+            android:id="@+id/button_yoloface"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="yoloface model" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-613325517/KhadasNpuDemo.iml" filepath="$PROJECT_DIR$/.idea/modules/-613325517/KhadasNpuDemo.iml" group="KhadasNpuDemo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app.iml" group="KhadasNpuDemo/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-283154290/openCVLibrary440.iml" filepath="$PROJECT_DIR$/.idea/modules/-283154290/openCVLibrary440.iml" group="KhadasNpuDemo/openCVLibrary440" />
+    </modules>
+  </component>
+</project>

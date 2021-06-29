@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">KhadasNpuDemo</string>
+    <string name="unSupportError">This device doesn\'t support Camera2 API.</string>
+</resources>

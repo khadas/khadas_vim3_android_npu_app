@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.quickbirdstudios:yuvtomat:1.1.0@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a4ad7c7a81d0332574680e2a69f3dd79/jetified-yuvtomat-1.1.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a4ad7c7a81d0332574680e2a69f3dd79/jetified-yuvtomat-1.1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a4ad7c7a81d0332574680e2a69f3dd79/jetified-yuvtomat-1.1.0/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.quickbirdstudios/yuvtomat/1.1.0/8f3ab357b18ea5f8f853f331c5e87d13beabcd5f/yuvtomat-1.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
