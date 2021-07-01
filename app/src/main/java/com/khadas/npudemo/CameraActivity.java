@@ -428,7 +428,7 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
                                 public void onPreviewSizeChosen(final Size size, final int rotation) {
                                     previewHeight = size.getHeight();
                                     previewWidth = size.getWidth();
-                                    Log.e(TAG_CameraActivity, "jason previewHeight = " + previewHeight + "previewWidth =" + previewWidth);
+                                    Log.e(TAG_CameraActivity, " previewHeight = " + previewHeight + "previewWidth =" + previewWidth);
                                     CameraActivity.this.onPreviewSizeChosen(size, rotation);
                                 }
                             },
@@ -686,11 +686,6 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
 //                                imageLocationRectF[index].left = previewWidth * (x - width / 2.0f);
 //                                imageLocationRectF[index].right = previewWidth * (x + width / 2.0f);
 
-
-
-                                Log.d(TAG_CameraActivity, "TAG_CameraActivity_jason top:" + imageLocationRectF[index].top + ",bottom:"
-                                        + imageLocationRectF[index].bottom + ",left:" + imageLocationRectF[index].left + ",right:"
-                                        + imageLocationRectF[index].right );
 
                                 Log.d(TAG_CameraActivity, "TAG_CameraActivity left:" + imageLocationRectF[index].left + ",right:"
                                         + imageLocationRectF[index].right + ",top:" + imageLocationRectF[index].top + ",bottom:"
