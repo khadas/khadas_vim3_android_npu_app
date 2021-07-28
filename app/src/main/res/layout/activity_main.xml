@@ -23,6 +23,12 @@
             android:text="model select"/>
 
         <Button
+            android:id="@+id/button_yolotiny"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="yolotiny model" />
+        <Button
             android:id="@+id/button_yolov3"
             android:layout_width="300dp"
             android:layout_height="80dp"

@@ -13,11 +13,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    private Button button_yolotiny;
     private Button button_yolov3;
     private Button button_yolov2;
     private Button button_yoloface;
     public  static  final String Intent_key="modetype";
     private static final String TAG = "MainActivity";
+    AlertDialog.Builder alertDialog0;
     AlertDialog.Builder alertDialog;
     AlertDialog.Builder alertDialog2;
     AlertDialog.Builder alertDialog3;
@@ -25,7 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public enum ModeType {
         DET_YOLOFACE_V2,
         DET_YOLO_V2,
-        DET_YOLO_V3
+        DET_YOLO_V3,
+        DET_YOLO_TINY
     }
 
 
@@ -38,14 +41,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView textView = (TextView)findViewById(R.id.title);
         textView.setText("model selection");
 
-
+        button_yolotiny = (Button) findViewById(R.id.button_yolotiny);
         button_yolov3 = (Button) findViewById(R.id.button_yolov3);
         button_yolov2 = (Button) findViewById(R.id.button_yolov2);
         button_yoloface = (Button) findViewById(R.id.button_yoloface);
 
+        button_yolotiny.setOnClickListener(this);
         button_yolov3.setOnClickListener(this);
         button_yolov2.setOnClickListener(this);
         button_yoloface.setOnClickListener(this);
+
+        alertDialog0 = new AlertDialog.Builder(MainActivity.this);
+        alertDialog0.setTitle("prompt");
+        alertDialog0.setMessage("yolotiny image recognition model will run");
+        alertDialog0.setNegativeButton("cancel", new DialogInterface.OnClickListener() {//添加取消
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.e(TAG, "AlertDialog cancel");
+                        //onClickNo();
+                    }
+                })
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {//添加"Yes"按钮
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.e(TAG, "AlertDialog ok");
+                        onClickYolovTiny();
+                    }
+                })
+                .create();
 
         alertDialog = new AlertDialog.Builder(MainActivity.this);
         alertDialog.setTitle("prompt");
@@ -112,6 +135,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         //Log.e(TAG,"OnClickListener");
         switch (v.getId()) {
+            case R.id.button_yolotiny:
+                Log.e(TAG, "button_yolotiny");
+                //onClickButton1(v);
+                alertDialog.setCancelable(false);//点击空白处之后弹出框不会消失
+                alertDialog.show();
+                buttonSetFocus(v);
+                break;
             case R.id.button_yolov3:
                 Log.e(TAG, "button_yolov3");
                 //onClickButton1(v);
@@ -146,7 +176,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.requestFocusFromTouch();
 
     }
-
+	
+    private void onClickYolovTiny() {
+        //处理逻辑
+        Log.e(TAG, "button_yolovtiny enter ");
+        Intent intent = new Intent(this,ClassifierActivity.class);
+        intent.putExtra(Intent_key,ModeType.DET_YOLO_TINY.ordinal());
+        startActivity(intent);
+    }
 
     private void onClickYolov3() {
         //处理逻辑
