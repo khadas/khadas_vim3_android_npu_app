@@ -34,7 +34,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.media.ImageReader;
 import android.media.ImageReader.OnImageAvailableListener;
@@ -54,6 +56,7 @@ import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.io.InputStream;
 import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -67,6 +70,9 @@ import org.opencv.core.MatOfByte;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.utils.Converters;
+import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 
 public abstract class CameraActivity extends AppCompatActivity implements Camera.PreviewCallback, OnImageAvailableListener {
@@ -79,6 +85,7 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
     private ConstraintLayout mConstraintLayout;
 
     private RelativeLayout parentLayout;
+    private LinearLayout resultLayout;
     protected int previewWidth = 0;
     protected int previewHeight = 0;
     private boolean isProcessingFrame = false;
@@ -107,11 +114,20 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
     private Paint paint_rect;  // 画框的
     private Paint paint_txt;   // 写文本的
     private Canvas canvas;     // 画布
+    ArrayList<String> linex = new ArrayList<String>();
+
+    protected TextView recognitionTextView,
+            recognition1TextView,
+            recognition2TextView,
+            recognitionValueTextView,
+            recognition1ValueTextView,
+            recognition2ValueTextView;
 
     public enum ModeType {
         DET_YOLOFACE_V2,
         DET_YOLO_V2,
-        DET_YOLO_V3
+        DET_YOLO_V3,
+        DET_INCEPTION
     }
     static ModeType mode_type;
 
@@ -168,7 +184,12 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
                 } else {
                     in = assmgr.open("yolo_face_99.nb");
                 }
-                //in = assmgr.open("faceNet_99.nb");
+            } if(mode_type == ModeType.DET_INCEPTION) {
+                if(mStrboard.equals("kvim3")) {
+                    in = assmgr.open("inceptionv3_88.nb");
+                } else {
+                    in = assmgr.open("inceptionv3_99.nb");
+                }
             }
             out = new FileOutputStream(file);
             int length = -1;
@@ -261,8 +282,20 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
         surfaceView.setZOrderOnTop(true);  // 设置surfaceView在顶层
         surfaceView.getHolder().setFormat(PixelFormat.TRANSPARENT); // 设置surfaceView为透明
         surfaceHolder = surfaceView.getHolder();  // 获取surfaceHolder以便后面画框
+
+        resultLayout = findViewById(R.id.bottom_sheet_layout);
+
+        recognitionTextView = findViewById(R.id.detected_item);
+        recognitionValueTextView = findViewById(R.id.detected_item_value);
+        recognition1TextView = findViewById(R.id.detected_item1);
+        recognition1ValueTextView = findViewById(R.id.detected_item1_value);
+        recognition2TextView = findViewById(R.id.detected_item2);
+        recognition2ValueTextView = findViewById(R.id.detected_item2_value);
+
+
         exec("chmod 777 data");
         if(mode_type == ModeType.DET_YOLO_V2) {
+            resultLayout.setVisibility(View.INVISIBLE);
             if(mStrboard.equals("kvim3")) {
                 copyNbFile(this, "yolov2_88.nb");
             } else {
@@ -271,6 +304,7 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
             setmoderesult = inceptionv3.npu_det_set_model(mode_type.ordinal());
         }
         if(mode_type == ModeType.DET_YOLO_V3) {
+            resultLayout.setVisibility(View.INVISIBLE);
             if(mStrboard.equals("kvim3")) {
                 copyNbFile(this, "yolov3_88.nb");
             } else {
@@ -280,12 +314,24 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
         }
 
         if(mode_type == ModeType.DET_YOLOFACE_V2) {
+            resultLayout.setVisibility(View.INVISIBLE);
             if(mStrboard.equals("kvim3")) {
                 copyNbFile(this, "yolo_face_88.nb");
             } else {
                 copyNbFile(this, "yolo_face_99.nb");
             }
-            //copyNbFile(this, "faceNet_99.nb");
+            setmoderesult = inceptionv3.npu_det_set_model(mode_type.ordinal());
+        }
+
+        if(mode_type == ModeType.DET_INCEPTION) {
+            if(mStrboard.equals("kvim3")) {
+                copyNbFile(this, "inceptionv3_88.nb");
+                read_inception_txt();
+            } else {
+                read_inception_txt();
+                copyNbFile(this, "inceptionv3_99.nb");
+            }
+
             setmoderesult = inceptionv3.npu_det_set_model(mode_type.ordinal());
         }
 
@@ -543,7 +589,6 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
             isProcessingFrame = true;
             Trace.beginSection("imageAvailable");
             Mat mat = Yuv.rgb(image);
-            Log.d(TAG_CameraActivity,"Enter onImageAvailable 22");
             // Mat(RGB)转Mat(BGR)
             Mat inputMat = new Mat();
             Imgproc.cvtColor(mat, inputMat, Imgproc.COLOR_RGB2BGR);
@@ -584,7 +629,6 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
             Log.w(TAG_CameraActivity, "Dropping frame!");
             return;
         }
-        Log.d(TAG_CameraActivity, "onPreviewFrame");
 
         try {
             // Initialize the storage bitmaps once when the resolution is known.
@@ -629,7 +673,50 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
         processImage();
     }
 
-    private void processImage() {
+    private void show_detect_results_inception(int[] classid ,float[] prob) {
+
+        recognitionTextView.setText(linex.get(classid[0]));
+        recognitionTextView.setTextColor(android.graphics.Color.RED);
+        recognitionValueTextView.setText(Float.toString(prob[0]));
+        recognitionValueTextView.setTextColor(android.graphics.Color.RED);
+        recognition1TextView.setText(linex.get(classid[1]));
+        recognition1TextView.setTextColor(android.graphics.Color.RED);
+        recognition1ValueTextView.setText(Float.toString(prob[1]));
+        recognition1ValueTextView.setTextColor(android.graphics.Color.RED);
+        recognition2TextView.setText(linex.get(classid[2]));
+        recognition2TextView.setTextColor(android.graphics.Color.RED);
+        recognition2ValueTextView.setText(Float.toString(prob[2]));
+        recognition2ValueTextView.setTextColor(android.graphics.Color.RED);
+    }
+    private void read_inception_txt() {
+        InputStream in = null;
+        InputStreamReader inputStreamReader = null;
+        BufferedReader fin = null;
+        Log.d(TAG_CameraActivity, "read_inception_txt");
+        try {
+            AssetManager assmgr = this.getApplicationContext().getAssets();
+            in = assmgr.open("imagenet_slim_labels.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            inputStreamReader = new InputStreamReader(in);
+            fin = new BufferedReader(inputStreamReader);
+            String line;
+            while ((line = fin.readLine()) != null) {
+                linex.add(line);
+            }
+            fin.close();
+            for (int i = 0; i < 2; i++) {
+                System.out.println(linex.get(i));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+        private void processImage() {
         Log.d(TAG_CameraActivity, "processImage enter");
         inputresult = inceptionv3.npu_det_set_input(imageByte, 3, previewWidth, previewHeight, 3, mode_type.ordinal());
         Log.d(TAG_CameraActivity, "------npu_det_set_input   inputresult " + inputresult);
@@ -637,8 +724,9 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
             detresult = inceptionv3.npu_det_get_result(detectresult, mode_type.ordinal());
             detectnum = detectresult.getDetectnum();
             Log.d(TAG_CameraActivity, "detectnum:" + detectnum);
+            Log.d(TAG_CameraActivity, "class id 0:" + detectresult.class_id[0] + "  class id 1" + detectresult.class_id[1]);
+            Log.d(TAG_CameraActivity, "prob 0:" + detectresult.prob[0] + "  prob 1:" + detectresult.prob[1]);
         }
-
         runInBackground(new Runnable() {
             @Override
             public void run() {
@@ -648,6 +736,10 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
 
                             final RectF[] imageLocationRectF = new RectF[detectnum];
                             final String[] resultText = new String[detectnum];
+                            if(mode_type == ModeType.DET_INCEPTION) {
+                                show_detect_results_inception(detectresult.class_id,detectresult.prob);
+                            } else {
+
                             for (index = 0; index < detectnum; index++) {
                                 Log.d(TAG_CameraActivity, "------npu_det_get_result   detresult " + detresult + " detectresult det num :" + detectnum + " index:" + index + " x:" + detectresult.left[index] + " y:" + detectresult.top[index]);
                                 Log.d(TAG_CameraActivity, "------npu_det_get_result   detresult " + detresult + " detectresult det num :" + detectnum + " index:" + index + " width:" + detectresult.right[index] + " height:" + detectresult.bottom[index]);
@@ -693,6 +785,7 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
                                 resultText[index] = detectresult.lable_name[index];
                             }
                             show_detect_results(imageLocationRectF, resultText);
+                            }
 
                     }
                 });

@@ -17,11 +17,13 @@
         android:layout_marginTop="0dp"
         android:background="@android:color/black"
         tools:context=".CameraActivity">
-
         <SurfaceView
             android:id="@+id/preview_detector_surfaceView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </FrameLayout>
-
+    <include
+        android:id="@+id/bottom_sheet_layout"
+        android:visibility="visible"
+        layout="@layout/tfe_ic_layout_bottom_sheet" />
 </androidx.constraintlayout.widget.ConstraintLayout>

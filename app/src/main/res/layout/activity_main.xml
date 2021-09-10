@@ -40,6 +40,12 @@
             android:layout_height="80dp"
             style="?android:attr/buttonBarButtonStyle"
             android:text="yoloface model" />
+        <Button
+            android:id="@+id/button_inception"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="inceptionv3 model" />
 
     </LinearLayout>
 </LinearLayout>
