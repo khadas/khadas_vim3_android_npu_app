@@ -109,6 +109,7 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
     private int detresult = -1;
     private int setmoderesult = -1;
     private int index;
+    private Context context;
 
     private SurfaceHolder surfaceHolder;  // 用于画框的surfaceView的holder
     private Paint paint_rect;  // 画框的
@@ -135,6 +136,7 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
         Log.d(TAG_CameraActivity, "CameraActivity enter ");
         inceptionv3 = new KhadasNpuManager(this);
         detectresult = new DetectResult();
+        context = this;
         mStrboard = SystemProperties.get("ro.product.device");
     }
 
@@ -292,23 +294,31 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
         recognition2TextView = findViewById(R.id.detected_item2);
         recognition2ValueTextView = findViewById(R.id.detected_item2_value);
 
+        khadas_set_mode();
+    }
+
+    public void khadas_set_mode() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
 
         exec("chmod 777 data");
+        exec("chmod 666 /dev/galcore");
         if(mode_type == ModeType.DET_YOLO_V2) {
             resultLayout.setVisibility(View.INVISIBLE);
             if(mStrboard.equals("kvim3")) {
-                copyNbFile(this, "yolov2_88.nb");
+                copyNbFile(context, "yolov2_88.nb");
             } else {
-                copyNbFile(this, "yolov2_99.nb");
+                copyNbFile(context, "yolov2_99.nb");
             }
             setmoderesult = inceptionv3.npu_det_set_model(mode_type.ordinal());
         }
         if(mode_type == ModeType.DET_YOLO_V3) {
             resultLayout.setVisibility(View.INVISIBLE);
             if(mStrboard.equals("kvim3")) {
-                copyNbFile(this, "yolov3_88.nb");
+                copyNbFile(context, "yolov3_88.nb");
             } else {
-                copyNbFile(this, "yolov3_99.nb");
+                copyNbFile(context, "yolov3_99.nb");
             }
             setmoderesult = inceptionv3.npu_det_set_model(mode_type.ordinal());
         }
@@ -316,27 +326,30 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
         if(mode_type == ModeType.DET_YOLOFACE_V2) {
             resultLayout.setVisibility(View.INVISIBLE);
             if(mStrboard.equals("kvim3")) {
-                copyNbFile(this, "yolo_face_88.nb");
+                copyNbFile(context, "yolo_face_88.nb");
             } else {
-                copyNbFile(this, "yolo_face_99.nb");
+                copyNbFile(context, "yolo_face_99.nb");
             }
             setmoderesult = inceptionv3.npu_det_set_model(mode_type.ordinal());
         }
 
         if(mode_type == ModeType.DET_INCEPTION) {
             if(mStrboard.equals("kvim3")) {
-                copyNbFile(this, "inceptionv3_88.nb");
+                copyNbFile(context, "inceptionv3_88.nb");
                 read_inception_txt();
             } else {
                 read_inception_txt();
-                copyNbFile(this, "inceptionv3_99.nb");
+                copyNbFile(context, "inceptionv3_99.nb");
             }
 
             setmoderesult = inceptionv3.npu_det_set_model(mode_type.ordinal());
         }
 
+            }
+        });
         Log.d(TAG_CameraActivity, "------npu_det_set_model   setmoderesult " + setmoderesult);
     }
+
 
     @Override
     public synchronized void onStart() {
@@ -613,7 +626,9 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
                         }
                     };
 
-            processImage();
+            if(setmoderesult == 0) {
+                processImage();
+            }
         } catch (final Exception e) {
             Log.e(TAG_CameraActivity, "Exception!", e);
             Trace.endSection();
@@ -669,8 +684,9 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
                         isProcessingFrame = false;
                     }
                 };
-
-        processImage();
+        if(setmoderesult == 0) {
+            processImage();
+        }
     }
 
     private void show_detect_results_inception(int[] classid ,float[] prob) {
