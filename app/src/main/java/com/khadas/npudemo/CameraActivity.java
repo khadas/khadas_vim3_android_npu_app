@@ -120,9 +120,13 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
     protected TextView recognitionTextView,
             recognition1TextView,
             recognition2TextView,
+            recognition3TextView,
+            recognition4TextView,
             recognitionValueTextView,
             recognition1ValueTextView,
-            recognition2ValueTextView;
+            recognition2ValueTextView,
+            recognition3ValueTextView,
+            recognition4ValueTextView;
 
     public enum ModeType {
         DET_YOLOFACE_V2,
@@ -293,6 +297,10 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
         recognition1ValueTextView = findViewById(R.id.detected_item1_value);
         recognition2TextView = findViewById(R.id.detected_item2);
         recognition2ValueTextView = findViewById(R.id.detected_item2_value);
+        recognition3TextView = findViewById(R.id.detected_item3);
+        recognition3ValueTextView = findViewById(R.id.detected_item3_value);
+        recognition4TextView = findViewById(R.id.detected_item4);
+        recognition4ValueTextView = findViewById(R.id.detected_item4_value);
 
         khadas_set_mode();
     }
@@ -695,14 +703,26 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
         recognitionTextView.setTextColor(android.graphics.Color.RED);
         recognitionValueTextView.setText(Float.toString(prob[0]));
         recognitionValueTextView.setTextColor(android.graphics.Color.RED);
+
         recognition1TextView.setText(linex.get(classid[1]));
         recognition1TextView.setTextColor(android.graphics.Color.RED);
         recognition1ValueTextView.setText(Float.toString(prob[1]));
         recognition1ValueTextView.setTextColor(android.graphics.Color.RED);
+
         recognition2TextView.setText(linex.get(classid[2]));
         recognition2TextView.setTextColor(android.graphics.Color.RED);
         recognition2ValueTextView.setText(Float.toString(prob[2]));
         recognition2ValueTextView.setTextColor(android.graphics.Color.RED);
+
+        recognition3TextView.setText(linex.get(classid[3]));
+        recognition3TextView.setTextColor(android.graphics.Color.RED);
+        recognition3ValueTextView.setText(Float.toString(prob[3]));
+        recognition3ValueTextView.setTextColor(android.graphics.Color.RED);
+
+        recognition4TextView.setText(linex.get(classid[4]));
+        recognition4TextView.setTextColor(android.graphics.Color.RED);
+        recognition4ValueTextView.setText(Float.toString(prob[4]));
+        recognition4ValueTextView.setTextColor(android.graphics.Color.RED);
     }
     private void read_inception_txt() {
         InputStream in = null;
@@ -740,8 +760,6 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
             detresult = inceptionv3.npu_det_get_result(detectresult, mode_type.ordinal());
             detectnum = detectresult.getDetectnum();
             Log.d(TAG_CameraActivity, "detectnum:" + detectnum);
-            Log.d(TAG_CameraActivity, "class id 0:" + detectresult.class_id[0] + "  class id 1" + detectresult.class_id[1]);
-            Log.d(TAG_CameraActivity, "prob 0:" + detectresult.prob[0] + "  prob 1:" + detectresult.prob[1]);
         }
         runInBackground(new Runnable() {
             @Override
