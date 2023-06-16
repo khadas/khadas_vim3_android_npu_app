@@ -138,8 +138,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_yolotiny:
                 Log.e(TAG, "button_yolotiny");
                 //onClickButton1(v);
-                alertDialog.setCancelable(false);//点击空白处之后弹出框不会消失
-                alertDialog.show();
+                alertDialog0.setCancelable(false);//点击空白处之后弹出框不会消失
+                alertDialog0.show();
                 buttonSetFocus(v);
                 break;
             case R.id.button_yolov3:
