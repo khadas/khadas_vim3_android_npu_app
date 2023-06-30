@@ -112,7 +112,8 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
         DET_YOLOFACE_V2,
         DET_YOLO_V2,
         DET_YOLO_V3,
-        DET_YOLO_TINY
+        DET_YOLO_TINY,
+        DET_YOLO_V7_TINY
     }
     static ModeType mode_type;
 
@@ -168,6 +169,12 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
                     in = assmgr.open("yolotiny_88.nb");
                 } else {
                     in = assmgr.open("yolotiny_99.nb");
+                }
+            }  if(mode_type == ModeType.DET_YOLO_V7_TINY) {
+                if(mStrboard.equals("kvim3")) {
+                    in = assmgr.open("yolov7_tiny_88.nb");
+                } else {
+                    in = assmgr.open("yolov7_tiny_99.nb");
                 }
             }  if(mode_type == ModeType.DET_YOLOFACE_V2) {
                 if(mStrboard.equals("kvim3")) {
@@ -290,6 +297,14 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
                 copyNbFile(this, "yolotiny_88.nb");
             } else {
                 copyNbFile(this, "yolotiny_99.nb");
+            }
+            setmoderesult = inceptionv3.npu_det_set_model(mode_type.ordinal());
+        }
+        if(mode_type == ModeType.DET_YOLO_V7_TINY) {
+            if(mStrboard.equals("kvim3")) {
+                copyNbFile(this, "yolov7_tiny_88.nb");
+            } else {
+                copyNbFile(this, "yolov7_tiny_99.nb");
             }
             setmoderesult = inceptionv3.npu_det_set_model(mode_type.ordinal());
         }
