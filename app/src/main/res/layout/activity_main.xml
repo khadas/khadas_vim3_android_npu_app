@@ -23,6 +23,18 @@
             android:text="model select"/>
 
         <Button
+            android:id="@+id/button_yolov8n"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="yolov8n model" />
+        <Button
+            android:id="@+id/button_yolov7_tiny"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="yolov7_tiny model" />
+        <Button
             android:id="@+id/button_yolotiny"
             android:layout_width="300dp"
             android:layout_height="70dp"
@@ -46,18 +58,6 @@
             android:layout_height="70dp"
             style="?android:attr/buttonBarButtonStyle"
             android:text="yoloface model" />
-        <Button
-            android:id="@+id/button_yolov7_tiny"
-            android:layout_width="300dp"
-            android:layout_height="70dp"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="yolov7_tiny model" />
-        <Button
-            android:id="@+id/button_yolov8n"
-            android:layout_width="300dp"
-            android:layout_height="70dp"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="yolov8n model" />
 
     </LinearLayout>
 </LinearLayout>
