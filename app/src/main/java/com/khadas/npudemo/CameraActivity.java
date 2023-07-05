@@ -112,7 +112,7 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
         DET_YOLOFACE_V2,
         DET_YOLO_V2,
         DET_YOLO_V3,
-        DET_YOLO_TINY,
+        DET_YOLO_V3_TINY,
         DET_YOLO_V7_TINY,
         DET_YOLO_V8N
     }
@@ -165,11 +165,11 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
                 } else {
                     in = assmgr.open("yolov3_99.nb");
                 }
-            }  if(mode_type == ModeType.DET_YOLO_TINY) {
+            }  if(mode_type == ModeType.DET_YOLO_V3_TINY) {
                 if(mStrboard.equals("kvim3")) {
-                    in = assmgr.open("yolotiny_88.nb");
+                    in = assmgr.open("yolov3_tiny_88.nb");
                 } else {
-                    in = assmgr.open("yolotiny_99.nb");
+                    in = assmgr.open("yolov3_tiny_99.nb");
                 }
             }  if(mode_type == ModeType.DET_YOLO_V7_TINY) {
                 if(mStrboard.equals("kvim3")) {
@@ -299,11 +299,11 @@ public abstract class CameraActivity extends AppCompatActivity implements Camera
             }
             setmoderesult = inceptionv3.npu_det_set_model(mode_type.ordinal());
         }
-        if(mode_type == ModeType.DET_YOLO_TINY) {
+        if(mode_type == ModeType.DET_YOLO_V3_TINY) {
             if(mStrboard.equals("kvim3")) {
-                copyNbFile(this, "yolotiny_88.nb");
+                copyNbFile(this, "yolov3_tiny_88.nb");
             } else {
-                copyNbFile(this, "yolotiny_99.nb");
+                copyNbFile(this, "yolov3_tiny_99.nb");
             }
             setmoderesult = inceptionv3.npu_det_set_model(mode_type.ordinal());
         }

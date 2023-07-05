@@ -35,11 +35,11 @@
             style="?android:attr/buttonBarButtonStyle"
             android:text="yolov7_tiny model" />
         <Button
-            android:id="@+id/button_yolotiny"
+            android:id="@+id/button_yolov3_tiny"
             android:layout_width="300dp"
             android:layout_height="70dp"
             style="?android:attr/buttonBarButtonStyle"
-            android:text="yolotiny model" />
+            android:text="yolov3_tiny model" />
         <Button
             android:id="@+id/button_yolov3"
             android:layout_width="300dp"

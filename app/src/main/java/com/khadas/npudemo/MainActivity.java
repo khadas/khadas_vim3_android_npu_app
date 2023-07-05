@@ -13,7 +13,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button button_yolotiny;
+    private Button button_yolov3_tiny;
     private Button button_yolov3;
     private Button button_yolov2;
     private Button button_yoloface;
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public  static  final String Intent_key="modetype";
     private static final String TAG = "MainActivity";
     AlertDialog.Builder alertDialog0;
-    AlertDialog.Builder alertDialog;
+    AlertDialog.Builder alertDialog1;
     AlertDialog.Builder alertDialog2;
     AlertDialog.Builder alertDialog3;
     AlertDialog.Builder alertDialog4;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DET_YOLOFACE_V2,
         DET_YOLO_V2,
         DET_YOLO_V3,
-        DET_YOLO_TINY,
+        DET_YOLO_V3_TINY,
         DET_YOLO_V7_TINY,
         DET_YOLO_V8N
     }
@@ -47,14 +47,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView textView = (TextView)findViewById(R.id.title);
         textView.setText("model selection");
 
-        button_yolotiny = (Button) findViewById(R.id.button_yolotiny);
+        button_yolov3_tiny = (Button) findViewById(R.id.button_yolov3_tiny);
         button_yolov3 = (Button) findViewById(R.id.button_yolov3);
         button_yolov2 = (Button) findViewById(R.id.button_yolov2);
         button_yoloface = (Button) findViewById(R.id.button_yoloface);
         button_yolov7_tiny = (Button) findViewById(R.id.button_yolov7_tiny);
         button_yolov8n= (Button) findViewById(R.id.button_yolov8n);
 
-        button_yolotiny.setOnClickListener(this);
+        button_yolov3_tiny.setOnClickListener(this);
         button_yolov3.setOnClickListener(this);
         button_yolov2.setOnClickListener(this);
         button_yoloface.setOnClickListener(this);
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         alertDialog0 = new AlertDialog.Builder(MainActivity.this);
         alertDialog0.setTitle("prompt");
-        alertDialog0.setMessage("yolotiny image recognition model will run");
+        alertDialog0.setMessage("yolov3_tiny image recognition model will run");
         alertDialog0.setNegativeButton("cancel", new DialogInterface.OnClickListener() {//添加取消
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -75,15 +75,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.e(TAG, "AlertDialog ok");
-                        onClickYolovTiny();
+                        onClickYolov3Tiny();
                     }
                 })
                 .create();
 
-        alertDialog = new AlertDialog.Builder(MainActivity.this);
-        alertDialog.setTitle("prompt");
-        alertDialog.setMessage("yolov3 image recognition model will run");
-        alertDialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {//添加取消
+        alertDialog1 = new AlertDialog.Builder(MainActivity.this);
+        alertDialog1.setTitle("prompt");
+        alertDialog1.setMessage("yolov3 image recognition model will run");
+        alertDialog1.setNegativeButton("cancel", new DialogInterface.OnClickListener() {//添加取消
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.e(TAG, "AlertDialog cancel");
@@ -181,8 +181,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         //Log.e(TAG,"OnClickListener");
         switch (v.getId()) {
-            case R.id.button_yolotiny:
-                Log.e(TAG, "button_yolotiny");
+            case R.id.button_yolov3_tiny:
+                Log.e(TAG, "button_yolov3_tiny");
                 //onClickButton1(v);
                 alertDialog0.setCancelable(false);//点击空白处之后弹出框不会消失
                 alertDialog0.show();
@@ -191,8 +191,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_yolov3:
                 Log.e(TAG, "button_yolov3");
                 //onClickButton1(v);
-                alertDialog.setCancelable(false);//点击空白处之后弹出框不会消失
-                alertDialog.show();
+                alertDialog1.setCancelable(false);//点击空白处之后弹出框不会消失
+                alertDialog1.show();
                 buttonSetFocus(v);
                 break;
             case R.id.button_yolov2:
@@ -237,11 +237,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 	
-    private void onClickYolovTiny() {
+    private void onClickYolov3Tiny() {
         //处理逻辑
-        Log.e(TAG, "button_yolovtiny enter ");
+        Log.e(TAG, "button_yolov3_tiny enter ");
         Intent intent = new Intent(this,ClassifierActivity.class);
-        intent.putExtra(Intent_key,ModeType.DET_YOLO_TINY.ordinal());
+        intent.putExtra(Intent_key,ModeType.DET_YOLO_V3_TINY.ordinal());
         startActivity(intent);
     }
 
